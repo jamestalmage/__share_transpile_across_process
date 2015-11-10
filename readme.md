@@ -10,8 +10,17 @@ $ node test1.js
 ....................................................................................................
 Launched server, loaded babel, plus:
 100 children forked and loaded two transpiled dependencies each in 3324ms.
-
 ```
+
+For comparison
+```sh
+$ node comparison.js
+
+....................................................................................................
+Loading up an entire babel instance per fork: 
+100 children forked and loaded two transpiled dependencies each in 16459ms.
+```
+
 
 Using a long running background server on Dev machines improves the situation more
 

@@ -9,11 +9,6 @@ var hasGenerators = parseInt(process.version.slice(1), 10) > 0;
 var options = {
 	blacklist: hasGenerators ? ['regenerator'] : [],
 	optional: hasGenerators ? ['asyncToGenerator', 'runtime'] : ['runtime']
-	/* plugins: [
-		createEspowerPlugin(babel, {
-			patterns: require('./enhanceassert').PATTERNS
-		})
-	]   */
 };
 
 var cache = {};
