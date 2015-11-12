@@ -15,7 +15,7 @@ var cache = {};
 
 module.exports = function (port, silent) {
 	var server = http.createServer(function (req, res) {
-		var filePath = decodeURIComponent(req.url);
+		var filePath = req.url;
 
 		if (!silent) {
 			console.log('got request for URL' + filePath);

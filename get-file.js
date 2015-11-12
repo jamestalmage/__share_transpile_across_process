@@ -19,7 +19,7 @@ function viaNode(filePath) {
 
 // curl is much lighter weight than forking another node process, so performs better.
 function viaCurl(filePath) {
-	return childProcess.execFileSync(curl, ['http://localhost:3072/' + encodeURIComponent(filePath)], {encoding: 'utf8'});
+	return childProcess.execFileSync(curl, [encodeURI('http://localhost:3072/' + filePath)], {encoding: 'utf8'});
 }
 
 module.exports = {

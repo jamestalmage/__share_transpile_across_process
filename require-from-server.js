@@ -3,7 +3,7 @@
 var file = process.argv[2];
 var http = require('http');
 
-http.get('http://localhost:3072/' + encodeURIComponent(file), function (res) {
+http.get(encodeURI('http://localhost:3072/' + file), function (res) {
 	if (res.statusCode !== 200) {
 		console.error('statusCode !== 200... (' + res.statusCode + ')');
 		process.exit(1);
