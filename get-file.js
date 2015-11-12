@@ -13,6 +13,8 @@ var curl = process.argv[2];
 var requireFromServer = path.join(__dirname, 'require-from-server.js');
 var hello = path.join(__dirname, 'hello');
 var http = path.join(__dirname, 'http');
+var fs;
+var hasha;
 
 // fetch via another node process
 function viaNode(filePath) {
@@ -40,9 +42,17 @@ function toUrl(filePath) {
 	return encodeURI('http://localhost:3072/' + filePath);
 }
 
+function viaFsSync(filePath) {
+	hasha = hasha || require('hasha');
+	fs = fs || require('fs');
+	hasha.fromFileSync(filePath); // discard - just here to provide realistic slowdown;
+	return fs.readFileSync(filePath.replace("_across_process", "_across_process/transpiled"), 'utf8');
+}
+
 module.exports = {
 	viaNode: viaNode,
 	viaCurl: viaCurl,
 	viaGo: viaGo,
-	viaHttpTiny: viaHttpTiny
+	viaHttpTiny: viaHttpTiny,
+	viaFsSync: viaFsSync
 };

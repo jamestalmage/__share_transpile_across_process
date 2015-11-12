@@ -2,14 +2,7 @@
 
 var http = require('http');
 var fs = require('fs');
-var babel = require('babel-core');
-
-var hasGenerators = parseInt(process.version.slice(1), 10) > 0;
-
-var options = {
-	blacklist: hasGenerators ? ['regenerator'] : [],
-	optional: hasGenerators ? ['asyncToGenerator', 'runtime'] : ['runtime']
-};
+var transform = require('./transform');
 
 var cache = {};
 
@@ -23,7 +16,7 @@ module.exports = function (port, silent) {
 
 		if (!cache[filePath]) {
 			cache[filePath] = new Promise(function (resolve, reject) {
-				babel.transformFile(filePath, options, function (err, file) {
+				transform(filePath, function (err, file) {
 					if (err) {
 						reject(err);
 						return;
