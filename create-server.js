@@ -18,7 +18,7 @@ module.exports = function (port, silent) {
 		var filePath = req.url;
 
 		if (!silent) {
-			console.log('got request for URL' + filePath);
+			console.log('got request for URL:' + JSON.stringify(filePath) + " " + filePath.length);
 		}
 
 		if (!cache[filePath]) {

@@ -12,27 +12,37 @@ var path = require('path');
 var curl = process.argv[2];
 var requireFromServer = path.join(__dirname, 'require-from-server.js');
 var hello = path.join(__dirname, 'hello');
+var http = path.join(__dirname, 'http');
 
 // fetch via another node process
 function viaNode(filePath) {
-	return childProcess.execFileSync(node, [requireFromServer, filePath], {encoding: 'utf8'})
+	return exec(node, [requireFromServer, filePath]);
 }
 
 function viaGo(filePath) {
-	return viaExec(hello, filePath)
+	return exec(hello, [toUrl(filePath)]);
+}
+
+function viaHttpTiny(filePath) {
+	return exec(http, ['get', toUrl(filePath)]);
 }
 
 // curl is much lighter weight than forking another node process, so performs better.
 function viaCurl(filePath) {
-	return viaExec(curl, filePath);
+	return exec(curl, [toUrl(filePath)]);
 }
 
-function viaExec(cmdPath, filePath) {
-	return childProcess.execFileSync(cmdPath, [encodeURI('http://localhost:3072/' + filePath)], {encoding: 'utf8'});
+function exec(cmdPath, args) {
+	return childProcess.execFileSync(cmdPath, args, {encoding: 'utf8'});
+}
+
+function toUrl(filePath) {
+	return encodeURI('http://localhost:3072/' + filePath);
 }
 
 module.exports = {
 	viaNode: viaNode,
 	viaCurl: viaCurl,
-	viaGo: viaGo
+	viaGo: viaGo,
+	viaHttpTiny: viaHttpTiny
 };
