@@ -8,7 +8,7 @@ var curl = which.sync('curl');
 
 var children = [];
 
-var count = 100;
+var count = 6;
 
 for (var i = 0; i < count; i++) {
 	(function (i) {

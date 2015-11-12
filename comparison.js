@@ -8,7 +8,7 @@ var childProcess = require('child_process');
 
 var children = [];
 
-var count = 100;
+var count = 3;
 
 for (var i = 0; i < count; i++) {
 	(function (i) {
